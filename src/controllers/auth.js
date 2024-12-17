@@ -16,11 +16,11 @@ export const signup = async (req, res, next) =>{
          
         throw new Validation(error?.issues, 'Unprocessable entity', ErrorCodes.UNPROCESSABLE_ENTITY)
         }
-        console.log('16')
+   
     const {email, password, name} = req.body;
-    console.log('18')
+
     let user = await prismaClient.user.findFirst({where: {email}})
-    console.log('19', user)
+
 if (user) {
   
     throw ( new BadRequestsException('User already exists', ErrorCodes.USER_ALREADY_EXISTS))
@@ -44,23 +44,22 @@ export const login = async (req, res, next) =>{
     const {email, password, name} = req.body;
     
     let user = await prismaClient.user.findFirst({where: {email}})
-    console.log('HERE 34')
+  
     if (!user) {
 
         throw (new NotFoundException('User not found', ErrorCodes.USER_NOT_FOUND));
     }
-    console.log('HERE 38')
+
     
     if(!compareSync(password, user.password)) {
         throw new Error('Incorrect password')
     }
-    console.log(user.id), 'before jwt sign'
+
     const token = jwt.sign({
         userId: user.id
     },JWT_SECRET)
 
-    console.log('62', user.id)
-    console.log('user',user)
+  
     
       res.json({user, token})
      

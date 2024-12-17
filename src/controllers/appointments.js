@@ -8,7 +8,7 @@ export const createAppointment = async(req, res) => {
     const { job_centre_id, date, address, benefit_name } = req.body;
 
     const userId = req.user.id
-    console.log(userId, 'line 11')
+    
 
     const newAppointment = await prismaClient.appointments.create({
         data: {
@@ -16,7 +16,7 @@ export const createAppointment = async(req, res) => {
           customer_id: userId, // Use the logged-in user's ID
         },
       });
-      console.log('done')
+    
       res.json(newAppointment)
   
 }
@@ -54,7 +54,7 @@ export const deleteAppointment = async (req, res) => {
       deletedAppointment, // Return the deleted appointment details if needed
     });
   } catch (error) {
-    console.error("Error deleting appointment:", error);
+   
 
     if (error.code === "P2025") {
       // Prisma's specific error code for 'Record not found'
@@ -65,7 +65,7 @@ export const deleteAppointment = async (req, res) => {
 
 
 export const listAppointments = async (req, res) => {
-    console.log('LIST')
+
     const count = await prismaClient.appointments.count();
     const appointments = await prismaClient.appointments.findMany({
       skip: req.query.skip || 0,
@@ -77,7 +77,7 @@ export const listAppointments = async (req, res) => {
 export const viewMyAppointments = async (req, res) => {
   
   const userId = req.user.id
-  console.log(userId)
+  
   const appointments = await prismaClient.appointments.findMany({
     where: {
       customer_id: userId, // Match by the primary key field
