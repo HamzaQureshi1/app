@@ -6,8 +6,13 @@ import { prismaClient } from '../index.js'
 export const createAppointment = async(req, res) => {
 
     const { job_centre_id, date, address, benefit_name } = req.body;
-
+    console.log(typeof date, 'DATE')
+    console.log(typeof job_centre_id, 'JCID')
+    console.log(typeof address, 'ADDRESS')
+    console.log(typeof benefit_name, 'BN')
+    
     const userId = req.user.id
+    console.log(userId)
     
 
     const newAppointment = await prismaClient.appointments.create({

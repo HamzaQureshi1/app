@@ -7,8 +7,8 @@ import adminMiddleware from "../middleware/admin.js"
 const appointmentsRoutes = Router()
 
 appointmentsRoutes.post('/', [authMiddleware] ,errorHandler(createAppointment));
-appointmentsRoutes.put('/:id', [authMiddleware], errorHandler(updateAppointment))
-appointmentsRoutes.delete('/:id', [authMiddleware], errorHandler(deleteAppointment))
+appointmentsRoutes.put('/update/:id', [authMiddleware], errorHandler(updateAppointment))
+appointmentsRoutes.delete('/delete/:id', [authMiddleware], errorHandler(deleteAppointment))
 appointmentsRoutes.get('/list', [authMiddleware, adminMiddleware], errorHandler(listAppointments))
 appointmentsRoutes.get('/personal', [authMiddleware], errorHandler(viewMyAppointments))
 
