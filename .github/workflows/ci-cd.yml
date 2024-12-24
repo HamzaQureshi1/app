@@ -67,6 +67,12 @@ jobs:
         github_token: ${{ secrets.TOKEN }}
         publish_dir: ./frontend/build
 
+  
+    # Install Heroku CLI
+    - name: Install Heroku CLI
+      run: |
+        curl https://cli-assets.heroku.com/install.sh | sh    
+
     # Deploy Backend (example using Heroku)
     - name: Deploy Backend to Heroku
       if: github.ref == 'refs/heads/main'
