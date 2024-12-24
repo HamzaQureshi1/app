@@ -28,8 +28,7 @@ const LoginPage = () => {
       if (!response.data) {
         setLoginStatus(false);
       } else {
-        console.log(response.data);
-        localStorage.setItem("token", response.data.token)
+      
         setLoginStatus(true)
       }
     })
@@ -37,17 +36,24 @@ const LoginPage = () => {
 
   console.log("LoginPage rendered");
 
-  const userAuthenticated = () => {
-    console.log('user authenticated')
-    const token = localStorage.getItem("token");
-    axios.get("http://localhost:3000/api/auth/me", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((response) => {
-      console.log(response)
-    })
-  }
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/api/auth/me", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          setLoginStatus(true);
+        } else {
+          setLoginStatus(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoginStatus(false);
+      });
+  }, []);
 
   return (
 
@@ -71,7 +77,7 @@ const LoginPage = () => {
     />
     <button onClick={login}>Login </button>
     <button onClick={() => navigate("/signup")}>New User? Sign Up</button>
-    {loginStatus && userAuthenticated && (
+    {loginStatus &&  (
         <button onClick={() => navigate("/appointments")}>Open Appointments</button>
       )}
     </div>

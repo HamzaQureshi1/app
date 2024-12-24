@@ -9,7 +9,7 @@ const { verify } = jwt;
 const authMiddleware = async (req, res, next) =>{
 // 1.extract the token from the header
 
-const token = req.headers.authorization
+const token = req.cookies.token;
 console.log(token, 'TOKEN')
 
 // 2. if token is not present, throw an error of unauthorized.

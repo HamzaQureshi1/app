@@ -5,6 +5,7 @@ import { PrismaClient} from '@prisma/client'
 import { errorMiddleware } from './middleware/error.js'
 import { SignUpSchema } from './schema/users.js'
 import cors from "cors";
+import cookieParser from 'cookie-parser'
 
 const corsOptions = {
     origin: ["http://localhost:5173"],
@@ -12,11 +13,11 @@ const corsOptions = {
     credentials: true, // Allow cookies and credentials if needed
 }
 
-
-
 const app = express()
 
 app.use(cors(corsOptions));
+
+app.use(cookieParser())
 
 app.use(express.json())
 
