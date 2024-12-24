@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - hosting
   pull_request:
     branches:
       - main
+      - hosting
 
 jobs:
   build:
