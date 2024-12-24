@@ -43,12 +43,12 @@ jobs:
 
     # Step 5: Install dependencies for the backend
     - name: Install Backend Dependencies
-      working-directory: ./backend
+      working-directory: ./src
       run: npm install
 
     # Step 6: Run backend tests
     - name: Run Backend Tests
-      working-directory: ./backend
+      working-directory: ./src
       run: npm test
 
   deploy:
