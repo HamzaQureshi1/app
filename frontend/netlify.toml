@@ -2,3 +2,10 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+  [[redirects]]
+  from = "/api/*"
+  to = "https://app-xmfz.onrender.com"
+  status = 200
+  force = true
+  headers = { "Access-Control-Allow-Origin" = "https://your-netlify-app.netlify.app", "Access-Control-Allow-Credentials" = "true" }
