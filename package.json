@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "vitest",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "build": "echo 'Nothing to build'"
   },
   "keywords": [],
   "author": "",
