@@ -8,6 +8,7 @@ import React from 'react';
 import LoginPage from "./components/LoginPage.jsx";
 import SignupPage from "./components/SignupPage.jsx";
 import AppointmentsPage from "./components/AppointmentsPage.jsx";
+import testPage from "./components/testPage.jsx";
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <Route path="/" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/appointments" element={<AppointmentsPage />} />
+      <Route path="/test" element={<testPage />} />
     </Routes>
   </Router>)
  
