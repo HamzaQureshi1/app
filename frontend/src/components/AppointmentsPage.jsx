@@ -20,7 +20,7 @@ const AppointmentsPage = () => {
     ? 'https://app-xmfz.onrender.com'
     : 'http://localhost:3000';
 
-  const API_BASE_URL = `${baseUrl}/api/appointments`; // Replace with your backend URL
+  const API_BASE_URL = `${baseUrl}/appointments`; // Replace with your backend URL
 
   // Fetch all appointments
   const fetchAppointments = async () => {
