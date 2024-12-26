@@ -20,8 +20,14 @@ const LoginPage = () => {
     alert("Logged in successfully! (Add your login logic here)");
   };
 
+  const baseUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://app-xmfz.onrender.com'
+    : 'http://localhost:3000';
+
+
   const login = () => {
-    axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+    axios.post(`${baseUrl}/api/auth/login`, {
       email: email,
       password: password,
     }).then((response) =>{
@@ -35,11 +41,11 @@ const LoginPage = () => {
   }
 
   console.log("LoginPage rendered");
-  console.log(process.env.NODE_ENV);
+
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/auth/me`, {
+      .get(`${baseUrl}/api/auth/me`, {
         withCredentials: true,
       })
       .then((response) => {
