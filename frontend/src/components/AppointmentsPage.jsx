@@ -27,6 +27,7 @@ const AppointmentsPage = () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/personal`, {
         withCredentials: true,
+        credentials: 'include',
       });
       setAppointments(response.data.data);
       setAuthError(false);
@@ -44,6 +45,7 @@ const AppointmentsPage = () => {
     try {
       await axios.post(`${API_BASE_URL}`, formData, {
         withCredentials: true,
+        credentials: 'include',
       });
       alert("Appointment created successfully!");
       fetchAppointments();
@@ -63,6 +65,7 @@ const AppointmentsPage = () => {
     try {
       await axios.put(`${API_BASE_URL}/update/${editId}`, formData, {
         withCredentials: true,
+        credentials: 'include',
       });
       alert("Appointment updated successfully!");
       fetchAppointments();
@@ -83,6 +86,7 @@ const AppointmentsPage = () => {
     try {
       await axios.delete(`${API_BASE_URL}/delete/${id}`, {
         withCredentials: true,
+        credentials: 'include',
       });
       alert("Appointment deleted successfully!");
       fetchAppointments();
