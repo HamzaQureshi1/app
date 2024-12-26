@@ -1,9 +1,9 @@
-name: CI/CD Pipeline
+name: Deploy Project
 
 on:
   push:
     branches:
-      - main
+      - main  
       - hosting
   pull_request:
     branches:
@@ -11,73 +11,44 @@ on:
       - hosting
 
 jobs:
-  build:
-    name: Build and Test Frontend and Backend
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout the repository
-    - name: Checkout Code
+    # Checkout the code
+    - name: Checkout code
       uses: actions/checkout@v3
 
-    # Step 2: Set up Node.js for the frontend and backend
-    - name: Set up Node.js for Frontend
+    # Set up Node.js
+    - name: Set up Node.js for backend
       uses: actions/setup-node@v3
       with:
-        node-version: '22.12.0'
+        node-version: '22.x' # Use your Node.js version
 
-    - name: Set up Node.js for Backend
+    # Install and Build Backend
+    - name: Install backend dependencies
+      working-directory: ./src
+      run: |
+        npm install
+        npm run build # Optional if you have a build step for your backend
+
+    # Set up Node.js for frontend
+    - name: Set up Node.js for frontend
       uses: actions/setup-node@v3
       with:
-        node-version: '22.12.0'
+        node-version: '22.x' # Use your Node.js version
 
-    # Step 3: Install dependencies for the frontend
-    - name: Install Frontend Dependencies
+    # Install and Build Frontend
+    - name: Install frontend dependencies
       working-directory: ./frontend
-      run: npm install
-
-    # Step 4: Build the frontend
-    - name: Build Frontend
-      working-directory: ./frontend
-      run: npm run build
-
-    # Step 5: Install dependencies for the backend
-    - name: Install Backend Dependencies
-      working-directory: ./src
-      run: npm install
-
-    # Step 6: Run backend tests
-    - name: Run Backend Tests
-      working-directory: ./src
-      run: npm test
-
-  deploy:
-    name: Deploy Application
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-
-    # Deploy Frontend (example using GitHub Pages)
-    - name: Deploy Frontend to GitHub Pages
-      if: github.ref == 'refs/heads/main'
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.TOKEN }}
-        publish_dir: ./frontend/build
-
-  
-    # Install Heroku CLI
-    - name: Install Heroku CLI
       run: |
-        curl https://cli-assets.heroku.com/install.sh | sh    
+        npm install
+        npm run build
 
-    # Deploy Backend (example using Heroku)
-    - name: Deploy Backend to Heroku
-      if: github.ref == 'refs/heads/main'
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+    # Deploy Frontend and Backend
+    - name: Deploy to Hosting Platform
       run: |
-        heroku git:remote -a backend-server
-        git push heroku main
+        echo "Write your deployment script here"
+        # Examples:
+        # - Deploy to Vercel/Netlify for frontend
+        # - Deploy to Heroku/AWS/DigitalOcean for backend
