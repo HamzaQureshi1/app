@@ -50,6 +50,7 @@ jobs:
       run: |
         npm install -g netlify-cli
         netlify build
+        netlify link
         netlify deploy --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} \
           --site a4ebd1ab-9804-4e95-be45-9c6a2ab61177 \
           --prod \
