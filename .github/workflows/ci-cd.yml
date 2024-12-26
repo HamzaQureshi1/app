@@ -50,9 +50,12 @@ jobs:
 
     # Deploy Frontend and Backend
     - name: Deploy to Hosting Platform
+      env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      
       run: |
         netlify deploy 
-          --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} \
+          --auth $NETLIFY_AUTH_TOKEN \
           --site a4ebd1ab-9804-4e95-be45-9c6a2ab61177 \
           --prod \
           --dir ./frontend/dist
