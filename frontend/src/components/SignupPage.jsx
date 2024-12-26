@@ -17,7 +17,7 @@ const SignupPage = () => {
 
 
   const signup = () => {
-    axios.post("http://localhost:3000/api/auth/signup", {
+    axios.post(`${process.env.REACT_APP_API_URL}/api/auth/signup`, {
       email: emailReg,
       password: passwordReg,
       name: nameReg,

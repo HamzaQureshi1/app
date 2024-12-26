@@ -8,7 +8,7 @@ import cors from "cors";
 import cookieParser from 'cookie-parser'
 
 const corsOptions = {
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5173", "https://appointment-tool.netlify.app"],
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
     credentials: true, // Allow cookies and credentials if needed
 }

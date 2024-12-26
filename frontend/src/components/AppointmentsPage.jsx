@@ -15,7 +15,7 @@ const AppointmentsPage = () => {
   });
   const [editId, setEditId] = useState(null); // Tracks the ID of the appointment being edited
 
-  const API_BASE_URL = "http://localhost:3000/api/appointments"; // Replace with your backend URL
+  const API_BASE_URL = `${process.env.REACT_APP_API_URL}/api/appointments`; // Replace with your backend URL
 
   // Fetch all appointments
   const fetchAppointments = async () => {

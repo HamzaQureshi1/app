@@ -21,7 +21,7 @@ const LoginPage = () => {
   };
 
   const login = () => {
-    axios.post("http://localhost:3000/api/auth/login", {
+    axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
       email: email,
       password: password,
     }).then((response) =>{
@@ -38,7 +38,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/auth/me", {
+      .get(`${process.env.REACT_APP_API_URL}/api/auth/me`, {
         withCredentials: true,
       })
       .then((response) => {
