@@ -35,6 +35,7 @@ const LoginPage = () => {
   }
 
   console.log("LoginPage rendered");
+  console.log(process.env.NODE_ENV);
 
   useEffect(() => {
     axios
