@@ -49,7 +49,6 @@ jobs:
     - name: Deploy to Hosting Platform
       run: |
         npm install -g netlify-cli
-        netlify build
         netlify deploy --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} \
           --prod \
           --dir ./frontend/build
