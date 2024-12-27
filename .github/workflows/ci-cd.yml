@@ -14,8 +14,8 @@ jobs:
   # Run Unit Tests
   run-tests:
     runs-on: ubuntu-latest
-  env: 
-    JWT_SECRET:  ${{ secrets.JWT_SECRET }}
+    env: 
+      JWT_SECRET:  ${{ secrets.JWT_SECRET }}
 
     steps:
       # Step 1: Checkout the code
