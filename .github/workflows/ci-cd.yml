@@ -3,7 +3,7 @@ name: Deploy Project
 on:
   push:
     branches:
-      - main  
+      - main
       - hosting
   pull_request:
     branches:
@@ -11,54 +11,76 @@ on:
       - hosting
 
 jobs:
-  build-and-deploy:
+  # Run Unit Tests
+  run-tests:
     runs-on: ubuntu-latest
 
     steps:
-    # Checkout the code
-    - name: Checkout code
-      uses: actions/checkout@v3
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # Set up Node.js
-    - name: Set up Node.js for backend
-      uses: actions/setup-node@v3
-      with:
-        node-version: '22.x' # Use your Node.js version
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.x' # Use your Node.js version
 
-    # Install and Build Backend
-    - name: Install backend dependencies
-      working-directory: ./src
-      run: |
-        npm install
-        npm run build # Optional if you have a build step for your backend
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
 
-    # Set up Node.js for frontend
-    - name: Set up Node.js for frontend
-      uses: actions/setup-node@v3
-      with:
-        node-version: '22.x' # Use your Node.js version
+      # Step 4: Run unit tests
+      - name: Run unit tests
+        run: npm test
 
-    # Install and Build Frontend
-    - name: Install frontend dependencies
-      working-directory: ./frontend
-      run: |
-        npm install
-        npm run build
+  # Build and Deploy Job
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    needs: run-tests # This job depends on the run-tests job
 
-    - name: Install Netlify
-      run: npm install netlify-cli
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # Deploy Frontend and Backend
-    - name: Deploy to Hosting Platform
-      env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{secrets.NETLIFY_SITE_ID}}
-      
-      run: |
-        netlify deploy \
-          --auth $NETLIFY_AUTH_TOKEN \
-          --site $NETLIFY_SITE_ID \
-          --prod \
-          --dir ./frontend/dist
+      # Set up Node.js for backend
+      - name: Set up Node.js for backend
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.x' # Use your Node.js version
 
- 
+      # Install and Build Backend
+      - name: Install backend dependencies
+        working-directory: ./src
+        run: |
+          npm install
+          npm run build # Optional if you have a build step for your backend
+
+      # Set up Node.js for frontend
+      - name: Set up Node.js for frontend
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.x' # Use your Node.js version
+
+      # Install and Build Frontend
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: |
+          npm install
+          npm run build
+
+      - name: Install Netlify
+        run: npm install netlify-cli
+
+      # Deploy Frontend and Backend
+      - name: Deploy to Hosting Platform
+        env:
+            NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+            NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          netlify deploy \
+            --auth $NETLIFY_AUTH_TOKEN \
+            --site $NETLIFY_SITE_ID \
+            --prod \
+            --dir ./frontend/dist
