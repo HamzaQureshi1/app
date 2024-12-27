@@ -71,7 +71,7 @@ const LoginPage = () => {
   return (
 
     <div className = "Login">
-    <h1>Logi</h1>
+    <h1>Login</h1>
     
    
     <input
