@@ -139,7 +139,7 @@ describe("Auth Controller", () => {
         "hashed-password"
       );
 
-      expect(jwt.sign).toHaveBeenCalledWith({ userId: 1 }, expect.any(String));
+      expect(jwt.sign).toHaveBeenCalledWith({ id: 1 }, expect.any(String));
       expect(res.cookie).toHaveBeenCalledWith("token", "test-token", {
         httpOnly: true,
         secure: false, // Assuming non-production environment

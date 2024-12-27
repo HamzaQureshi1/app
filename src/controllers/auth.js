@@ -56,7 +56,7 @@ export const login = async (req, res, next) =>{
     }
 
     const token = jwt.sign({
-        userId: user.id
+        id: user.id
     },JWT_SECRET)
 
     const isProduction = process.env.NODE_ENV === "production";
