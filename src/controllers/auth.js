@@ -60,6 +60,7 @@ export const login = async (req, res, next) =>{
     },JWT_SECRET)
 
     const isProduction = process.env.NODE_ENV === "production";
+    console.log(isProduction, 'YOOO');
     const maxAge = 1000 * 60 * 60 * 24 * 7; // 7 days
 
   res.cookie("token", token, {
@@ -69,8 +70,6 @@ export const login = async (req, res, next) =>{
     sameSite: "None",
     expires: new Date(Date.now() + maxAge),
   });
-
-  
     
       res.json({user, token})
      
