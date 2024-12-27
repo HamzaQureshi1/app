@@ -11,11 +11,6 @@ import cookieParser from 'cookie-parser'
 
 const app = express()
 
-app.set("trust proxy", 2)
-
-
-
-
 app.use(cookieParser())
 
 const corsOptions = {
@@ -26,6 +21,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+app.set("trust proxy", 2)
 
 app.use(express.json())
 
