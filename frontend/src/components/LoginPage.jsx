@@ -27,10 +27,16 @@ const LoginPage = () => {
 
 
   const login = () => {
-    axios.post(`${baseUrl}/api/auth/login`, {
-      email: email,
-      password: password,
-    }).then((response) =>{
+    axios.post(
+      `${baseUrl}/api/auth/login`,
+      {
+        email: email,
+        password: password,
+      },
+      {
+        withCredentials: true, // Include credentials (cookies) in the request
+      }
+    ).then((response) =>{
       if (!response.data) {
         setLoginStatus(false);
       } else {
