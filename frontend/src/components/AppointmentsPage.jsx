@@ -31,7 +31,7 @@ const AppointmentsPage = () => {
       });
       setAppointments(response.data.data);
       setAuthError(false);
-      setUserRole(response.role); 
+      setUserRole(response.data.role); 
     } catch (error) {
       if (error.response && error.response.status === 401) {
         setAuthError(true);
