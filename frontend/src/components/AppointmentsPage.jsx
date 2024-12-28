@@ -29,6 +29,7 @@ const AppointmentsPage = () => {
       const response = await axios.get(`${API_BASE_URL}/personal`, {
         withCredentials: true,
       });
+      console.log(response.data, 'RESPONSE.DATA')
       setAppointments(response.data.data);
       setAuthError(false);
       setUserRole(response.data.role); 
