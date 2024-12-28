@@ -74,7 +74,7 @@ export const login = async (req, res, next) =>{
 
     httpOnly: true,
     secure: isProduction,
-    sameSite: "None",
+    sameSite: isProduction ? "None" : "Lax",
     expires: new Date(Date.now() + maxAge),
   });
     console.log(user, 'AFTER JWT')

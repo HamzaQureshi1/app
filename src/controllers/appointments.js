@@ -72,6 +72,7 @@ export const deleteAppointment = async (req, res) => {
 export const listAppointments = async (req, res) => {
 
     const count = await prismaClient.appointments.count();
+    console.log(count, 'COUNT')
     const appointments = await prismaClient.appointments.findMany({
       skip: req.query.skip || 0,
       take: 20

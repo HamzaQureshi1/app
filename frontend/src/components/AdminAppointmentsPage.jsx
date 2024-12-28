@@ -9,15 +9,16 @@ const AdminAppointmentsPage = () => {
       ? "https://app-xmfz.onrender.com"
       : "http://localhost:3000";
 
-  const API_BASE_URL = `${baseUrl}/api/appointments/all`; // Backend route for all appointments
+  const API_BASE_URL_LIST = `${baseUrl}/api/appointments/list`; // Backend route for all appointments
 
   useEffect(() => {
     const fetchAllAppointments = async () => {
       try {
-        const response = await axios.get(API_BASE_URL, {
+        const response = await axios.get(API_BASE_URL_LIST, {
           withCredentials: true,
         });
-        setAppointments(response.data);
+        setAppointments(response.data.data);
+       
       } catch (error) {
         console.error("Error fetching all appointments:", error);
       }
@@ -25,8 +26,9 @@ const AdminAppointmentsPage = () => {
 
     fetchAllAppointments();
   }, []);
-
+  console.log(appointments, 'APP')
   return (
+    
     <div>
       <h1>All Appointments</h1>
       {appointments.length === 0 ? (
