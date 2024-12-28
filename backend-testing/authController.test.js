@@ -143,7 +143,7 @@ describe("Auth Controller", () => {
       expect(res.cookie).toHaveBeenCalledWith("token", "test-token", {
         httpOnly: true,
         secure: false, // Assuming non-production environment
-        sameSite: "None",
+        sameSite: "Lax",
         expires: expect.any(Date),
       });
 
