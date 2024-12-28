@@ -21,9 +21,9 @@ if (!token) {
 try {
     const payload = jwt.verify(token, JWT_SECRET)
 
-
+console.log('auth middleware ', payload.id)
  //4. get user from payload
- const user = await prismaClient.user.findFirst({where: {id: payload.userId}})   
+ const user = await prismaClient.user.findUnique({where: {id: payload.id}})   
 
  if (!user) {
     next(new UnauthorizedException('Unauthorized', ErrorCodes.UNAUTHORIZED))

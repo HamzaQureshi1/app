@@ -80,7 +80,7 @@ export const listAppointments = async (req, res) => {
 }
 
 export const viewMyAppointments = async (req, res) => {
-    console.log(req.user, 'REQ.USER');
+ 
   const userId = req.user.id
   
   const appointments = await prismaClient.appointments.findMany({

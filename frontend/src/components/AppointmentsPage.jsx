@@ -126,7 +126,7 @@ const AppointmentsPage = () => {
     fetchAppointments();
   }, []);
 
-  console.log(userRole, 'ROLE')
+
 
   return (
    
