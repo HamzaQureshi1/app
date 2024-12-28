@@ -61,7 +61,7 @@ export const login = async (req, res, next) =>{
     const token = jwt.sign({
         id: user.id
     },JWT_SECRET)
-
+    console.log(token, 'TEKKEN')
     
 
 
@@ -77,6 +77,7 @@ export const login = async (req, res, next) =>{
     sameSite: isProduction ? "None" : "Lax",
     expires: new Date(Date.now() + maxAge),
   });
+  console.log(res.cookie.token, 'TWX')
     console.log(user, 'AFTER JWT')
       res.json({user, token})
      
@@ -86,4 +87,15 @@ export const login = async (req, res, next) =>{
         console.log(req, 'REEEEE')
         
         res.json(req.user)
+        }
+
+    export const logout = async (req, res, next) => {
+        res.cookie("token", "", {
+
+            httpOnly: true,
+            secure: isProduction,
+            sameSite: "None",
+            expires: new Date(0),
+          });
+          res.status(200);
         }

@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { set } from "zod";
@@ -124,6 +123,18 @@ const AppointmentsPage = () => {
     }
   };
 
+  const logOut = async () => {
+    try {
+      await axios.post(`${API_BASE_URL}/logout`, {
+        withCredentials: true,
+      });
+      () => navigate('/admin/appointments')
+  
+    } catch (error) {
+      console.error( error);
+    }
+  }
+
   useEffect(() => {
     fetchAppointments();
   }, []);
@@ -134,6 +145,9 @@ const AppointmentsPage = () => {
    
     <div>
       <h1>Appointments</h1>
+      <button onClick={()=>{logOut}}>
+    Logout
+  </button>
 
       {authError ? (
         <p>You are not logged in. Please log in to view your appointments.</p>
