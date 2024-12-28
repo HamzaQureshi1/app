@@ -8,7 +8,7 @@ import React from 'react';
 import LoginPage from "./components/LoginPage.jsx";
 import SignupPage from "./components/SignupPage.jsx";
 import AppointmentsPage from "./components/AppointmentsPage.jsx";
-import AdminAppointmentsPage from "./AdminAppointmentsPage";
+import AdminAppointmentsPage from ".components/AdminAppointmentsPage";
 axios.defaults.withCredentials = true;
 
 function App() {
