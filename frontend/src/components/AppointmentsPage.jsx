@@ -7,6 +7,7 @@ import { set } from "zod";
 const AppointmentsPage = () => {
   const [appointments, setAppointments] = useState([]);
   const [authError, setAuthError] = useState(false);
+  const [userRole, setUserRole] = useState(null); 
   const [formData, setFormData] = useState({
     job_centre_id: "",
     date: "",
@@ -30,6 +31,7 @@ const AppointmentsPage = () => {
       });
       setAppointments(response.data.data);
       setAuthError(false);
+      setUserRole(response.data.role); 
     } catch (error) {
       if (error.response && error.response.status === 401) {
         setAuthError(true);
@@ -212,6 +214,13 @@ const AppointmentsPage = () => {
           )}
         </>
       )}
+      {userRole === "ADMIN" && (
+  <button
+    onClick={() => navigate('/admin/appointments')} // Navigate to the admin view
+  >
+    View All Appointments
+  </button>
+)}
     </div>
   );
 };
