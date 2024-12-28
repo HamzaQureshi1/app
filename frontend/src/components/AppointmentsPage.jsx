@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { set } from "zod";
+import { useNavigate } from "react-router-dom";
 
 
 const AppointmentsPage = () => {
@@ -23,6 +24,7 @@ const AppointmentsPage = () => {
     : 'http://localhost:3000';
 
   const API_BASE_URL = `${baseUrl}/api/appointments`; // Replace with your backend URL
+  const API_BASE_URL2 = `${baseUrl}/api`; // Replace with your backend URL
 
   // Fetch all appointments
   const fetchAppointments = async () => {
@@ -125,10 +127,11 @@ const AppointmentsPage = () => {
 
   const logOut = async () => {
     try {
-      await axios.post(`${API_BASE_URL}/logout`, {
+      await axios.post(`${API_BASE_URL2}/auth/logout`, {
         withCredentials: true,
       });
-      () => navigate('/admin/appointments')
+      console.log('navigate')
+      navigate('/')
   
     } catch (error) {
       console.error( error);
@@ -145,7 +148,7 @@ const AppointmentsPage = () => {
    
     <div>
       <h1>Appointments</h1>
-      <button onClick={()=>{logOut}}>
+      <button onClick={logOut}>
     Logout
   </button>
 

@@ -9,6 +9,8 @@ import { NotFoundException } from "../exceptions/not-found.js";
 import { ErrorCodes } from "../exceptions/root.js";
 import { SignUpSchema } from '../schema/users.js';
 
+const isProduction = process.env.NODE_ENV === "production";
+
 export const signup = async (req, res, next) =>{
 
     try {
@@ -66,7 +68,7 @@ export const login = async (req, res, next) =>{
 
 
 
-    const isProduction = process.env.NODE_ENV === "production";
+   
     console.log(isProduction, 'YOOO');
     const maxAge = 1000 * 60 * 60 * 24 * 7; // 7 days
 
@@ -90,12 +92,14 @@ export const login = async (req, res, next) =>{
         }
 
     export const logout = async (req, res, next) => {
+        
         res.cookie("token", "", {
 
             httpOnly: true,
             secure: isProduction,
-            sameSite: "None",
+            sameSite: isProduction ? "None" : "Lax",
             expires: new Date(0),
           });
-          res.status(200);
+          res.status(200).json({ message: "Logged out successfully" })
+  
         }
