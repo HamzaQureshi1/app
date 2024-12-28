@@ -16,6 +16,7 @@ const AppointmentsPage = () => {
     benefit_name: "",
   });
   const [editId, setEditId] = useState(null); // Tracks the ID of the appointment being edited
+    const navigate = useNavigate();
 
   const baseUrl =
   process.env.NODE_ENV === 'production'
