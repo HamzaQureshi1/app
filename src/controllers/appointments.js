@@ -80,7 +80,7 @@ export const listAppointments = async (req, res) => {
 }
 
 export const viewMyAppointments = async (req, res) => {
-  const user = req.user;
+
   const userId = req.user.id
   
   const appointments = await prismaClient.appointments.findMany({
@@ -89,7 +89,7 @@ export const viewMyAppointments = async (req, res) => {
     },
   })
   res.json({
-    role: user.role, // Send role information
+    role: req.user.role, // Send role information
     data: appointments,
   });
 }
