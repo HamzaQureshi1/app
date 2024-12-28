@@ -124,7 +124,10 @@ const AppointmentsPage = () => {
     fetchAppointments();
   }, []);
 
+  console.log(userRole, 'ROLE')
+
   return (
+   
     <div>
       <h1>Appointments</h1>
 
