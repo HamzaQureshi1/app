@@ -33,6 +33,7 @@ const AppointmentsPage = () => {
       setAppointments(response.data.data);
       setAuthError(false);
       setUserRole(response.data.role); 
+      console.log(response.data.role, 'INSIDE FETCH')
     } catch (error) {
       if (error.response && error.response.status === 401) {
         setAuthError(true);
