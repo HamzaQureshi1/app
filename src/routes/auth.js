@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import { signup, login, me } from '../controllers/auth.js'
+import { signup, login, me, logout} from '../controllers/auth.js'
 import { errorHandler } from '../error-handler.js'
 import authMiddleware from '../middleware/auth.js'
 
@@ -10,5 +10,7 @@ authRoutes.post('/signup', errorHandler(signup) )
 authRoutes.post('/login', errorHandler(login) )
 
 authRoutes.get('/me', [authMiddleware], errorHandler(me))
+
+authRoutes.post('/logout', errorHandler(logout) )
 
 export default authRoutes;

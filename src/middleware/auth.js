@@ -9,8 +9,8 @@ const { verify } = jwt;
 const authMiddleware = async (req, res, next) =>{
 // 1.extract the token from the header
 
-const token = req.headers.authorization
-console.log(token, 'TOKEN')
+const token = req.cookies.token;
+
 
 // 2. if token is not present, throw an error of unauthorized.
 if (!token) {
@@ -23,7 +23,7 @@ try {
 
 
  //4. get user from payload
- const user = await prismaClient.user.findFirst({where: {id: payload.userId}})   
+ const user = await prismaClient.user.findUnique({where: {id: payload.id}})   
 
  if (!user) {
     next(new UnauthorizedException('Unauthorized', ErrorCodes.UNAUTHORIZED))

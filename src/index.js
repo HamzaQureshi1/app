@@ -5,18 +5,23 @@ import { PrismaClient} from '@prisma/client'
 import { errorMiddleware } from './middleware/error.js'
 import { SignUpSchema } from './schema/users.js'
 import cors from "cors";
-
-const corsOptions = {
-    origin: ["http://localhost:5173"],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
-    credentials: true, // Allow cookies and credentials if needed
-}
+import cookieParser from 'cookie-parser'
 
 
 
 const app = express()
 
+app.use(cookieParser())
+
+const corsOptions = {
+    origin: ["http://localhost:5173", "https://appointment-tool.netlify.app"],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+    credentials: true, // Allow cookies and credentials if needed
+}
+
 app.use(cors(corsOptions));
+
+app.set("trust proxy", 2)
 
 app.use(express.json())
 

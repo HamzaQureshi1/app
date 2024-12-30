@@ -13,6 +13,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
 
   const handleLogin = (e) => {
@@ -20,34 +21,65 @@ const LoginPage = () => {
     alert("Logged in successfully! (Add your login logic here)");
   };
 
-  const login = () => {
-    axios.post("http://localhost:3000/api/auth/login", {
-      email: email,
-      password: password,
-    }).then((response) =>{
-      if (!response.data) {
+  const baseUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://app-xmfz.onrender.com'
+    : 'http://localhost:3000';
+
+    const login = () => {
+      axios
+        .post(
+          `${baseUrl}/api/auth/login`,
+          {
+            email: email,
+            password: password,
+          },
+          {
+            withCredentials: true, // Include credentials (cookies) in the request
+          }
+        )
+        .then((response) => {
+          if (response.data) {
+            setLoginStatus(true);
+            setErrorMessage(""); // Clear any previous errors
+            alert("Login successful! Redirecting...");
+            navigate("/appointments"); // Navigate to appointments or dashboard
+          }
+        })
+        .catch((error) => {
+          // Handle error responses
+          if (error.response) {
+            // Backend sent a response (404, 401, etc.)
+            setErrorMessage(error.response.data.message); // Set backend error message
+          } else {
+            // Network or unexpected errors
+            setErrorMessage("An unexpected error occurred. Please try again.");
+          }
+          setLoginStatus(false);
+        });
+    };
+
+
+
+
+  useEffect(() => {
+    axios
+      .get(`${baseUrl}/api/auth/me`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+
+        if (response.status === 200) {
+          setLoginStatus(true);
+        } else {
+          setLoginStatus(false);
+        }
+      })
+      .catch((error) => {
+
         setLoginStatus(false);
-      } else {
-        console.log(response.data);
-        localStorage.setItem("token", response.data.token)
-        setLoginStatus(true)
-      }
-    })
-  }
-
-  console.log("LoginPage rendered");
-
-  const userAuthenticated = () => {
-    console.log('user authenticated')
-    const token = localStorage.getItem("token");
-    axios.get("http://localhost:3000/api/auth/me", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((response) => {
-      console.log(response)
-    })
-  }
+      });
+  }, []);
 
   return (
 
@@ -63,7 +95,7 @@ const LoginPage = () => {
     }}
     />
    <input
-    type = "text"
+    type = "password"
     placeholder="Password..."
     onChange = {(e) =>{
       setPassword(e.target.value)
@@ -71,9 +103,10 @@ const LoginPage = () => {
     />
     <button onClick={login}>Login </button>
     <button onClick={() => navigate("/signup")}>New User? Sign Up</button>
-    {loginStatus && userAuthenticated && (
+    {loginStatus &&  (
         <button onClick={() => navigate("/appointments")}>Open Appointments</button>
       )}
+      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
     </div>
 
 

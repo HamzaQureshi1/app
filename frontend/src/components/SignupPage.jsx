@@ -13,17 +13,21 @@ const SignupPage = () => {
   const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState(false);
 
+  const baseUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://app-xmfz.onrender.com'
+    : 'http://localhost:3000';
   
 
 
   const signup = () => {
-    axios.post("http://localhost:3000/api/auth/signup", {
+    axios.post(`${baseUrl}/api/auth/signup`, {
       email: emailReg,
       password: passwordReg,
       name: nameReg,
     }).then((response) => {
 
-      console.log(response)
+
       alert("Please Login.");
     }).catch((error) => {
       console.error("Signup failed:", error.response?.data || error.message);
@@ -55,7 +59,7 @@ onChange = {(e) =>{
 />
 <label>Password</label>
 <input
-type = "text"
+type = "password"
 onChange = {(e) =>{
   setPasswordReg(e.target.value)
 }}

@@ -1,75 +1,88 @@
-name: CI/CD Pipeline
+name: Deploy Project
 
 on:
   push:
     branches:
       - main
+      - hosting
   pull_request:
     branches:
       - main
+      - hosting
 
 jobs:
-  build:
-    name: Build and Test Frontend and Backend
+  # Run Unit Tests
+  run-tests:
     runs-on: ubuntu-latest
+    env: 
+      JWT_SECRET:  ${{ secrets.JWT_SECRET }}
 
     steps:
-    # Step 1: Checkout the repository
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # Step 2: Set up Node.js for the frontend and backend
-    - name: Set up Node.js for Frontend
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.x' # Use your Node.js version
 
-    - name: Set up Node.js for Backend
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
 
-    # Step 3: Install dependencies for the frontend
-    - name: Install Frontend Dependencies
-      working-directory: ./frontend
-      run: npm install
+      # Step 4: Run unit tests
+      - name: Run unit tests
+        run: npm test
 
-    # Step 4: Build the frontend
-    - name: Build Frontend
-      working-directory: ./frontend
-      run: npm run build
-
-    # Step 5: Install dependencies for the backend
-    - name: Install Backend Dependencies
-      working-directory: ./backend
-      run: npm install
-
-    # Step 6: Run backend tests
-    - name: Run Backend Tests
-      working-directory: ./backend
-      run: npm test
-
-  deploy:
-    name: Deploy Application
+  # Build and Deploy Job
+  build-and-deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: run-tests # This job depends on the run-tests job
+
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # Deploy Frontend (example using GitHub Pages)
-    - name: Deploy Frontend to GitHub Pages
-      if: github.ref == 'refs/heads/main'
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./frontend/build
+      # Set up Node.js for backend
+      - name: Set up Node.js for backend
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.x' # Use your Node.js version
 
-    # Deploy Backend (example using Heroku)
-    - name: Deploy Backend to Heroku
-      if: github.ref == 'refs/heads/main'
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: |
-        heroku git:remote -a <your-heroku-app-name>
-        git push heroku main
+      # Install and Build Backend
+      - name: Install backend dependencies
+        working-directory: ./src
+        run: |
+          npm install
+          npm run build # Optional if you have a build step for your backend
+
+      # Set up Node.js for frontend
+      - name: Set up Node.js for frontend
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.x' # Use your Node.js version
+
+      # Install and Build Frontend
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: |
+          npm install
+          npm run build
+
+      - name: Install Netlify
+        run: npm install netlify-cli
+
+      # Deploy Frontend and Backend
+      - name: Deploy to Hosting Platform
+        env:
+            NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+            NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          netlify deploy \
+            --auth $NETLIFY_AUTH_TOKEN \
+            --site $NETLIFY_SITE_ID \
+            --prod \
+            --dir ./frontend/dist

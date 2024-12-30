@@ -6,14 +6,8 @@ import { prismaClient } from '../index.js'
 export const createAppointment = async(req, res) => {
 
     const { job_centre_id, date, address, benefit_name } = req.body;
-    console.log(typeof date, 'DATE')
-    console.log(typeof job_centre_id, 'JCID')
-    console.log(typeof address, 'ADDRESS')
-    console.log(typeof benefit_name, 'BN')
     
     const userId = req.user.id
-    console.log(userId)
-    
 
     const newAppointment = await prismaClient.appointments.create({
         data: {
@@ -72,6 +66,7 @@ export const deleteAppointment = async (req, res) => {
 export const listAppointments = async (req, res) => {
 
     const count = await prismaClient.appointments.count();
+  
     const appointments = await prismaClient.appointments.findMany({
       skip: req.query.skip || 0,
       take: 20
@@ -80,7 +75,7 @@ export const listAppointments = async (req, res) => {
 }
 
 export const viewMyAppointments = async (req, res) => {
-  
+ 
   const userId = req.user.id
   
   const appointments = await prismaClient.appointments.findMany({
@@ -88,5 +83,8 @@ export const viewMyAppointments = async (req, res) => {
       customer_id: userId, // Match by the primary key field
     },
   })
-res.json({data:appointments})
+  res.json({
+    role: req.user.role, // Send role information
+    data: appointments,
+  });
 }
