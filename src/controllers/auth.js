@@ -43,19 +43,21 @@ res.json(user)}
 
 
 export const login = async (req, res, next) =>{
+    try{
     const {email, password, name} = req.body;
     
     let user = await prismaClient.user.findFirst({where: {email}})
   
     if (!user) {
-
-        throw (new NotFoundException('User not found', ErrorCodes.USER_NOT_FOUND));
-    }
-
- 
-    if(!compareSync(password, user.password)) {
-        throw new Error('Incorrect password')
-    }
+        // Throw a specific error for "User not found"
+        return res.status(404).json({ message: "User not found", code: "USER_NOT_FOUND" });
+      }
+  
+      // Check if the password matches
+      if (!compareSync(password, user.password)) {
+        return res.status(401).json({ message: "Credentials not recognised.", code: "INCORRECT_PASSWORD" });
+      }
+  
 
     const token = jwt.sign({
         id: user.id
@@ -80,7 +82,15 @@ export const login = async (req, res, next) =>{
   
         
         res.json(req.user)
-        }
+        } catch (error) {
+            console.error("Error during login:", error);
+        
+            // Handle unexpected errors
+            return res.status(500).json({
+              message: "An unexpected error occurred",
+              code: "INTERNAL_SERVER_ERROR",
+            });
+          }
 
     export const logout = async (req, res, next) => {
         
