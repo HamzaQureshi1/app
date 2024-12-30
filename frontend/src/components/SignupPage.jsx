@@ -59,7 +59,7 @@ onChange = {(e) =>{
 />
 <label>Password</label>
 <input
-type = "text"
+type = "password"
 onChange = {(e) =>{
   setPasswordReg(e.target.value)
 }}
