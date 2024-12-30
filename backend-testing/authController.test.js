@@ -162,27 +162,47 @@ describe("Auth Controller", () => {
 
       prismaClient.user.findFirst.mockResolvedValue(null); // No user found
 
-      await expect(login(req, res, mockNext)).rejects.toThrow("User not found");
-    });
+      await login(req, res, mockNext);
 
-    it("should throw an error if the password is incorrect", async () => {
-      const req = mockRequest({
-        email: "test@example.com",
-        password: "wrong-password",
-      });
-      const res = mockResponse();
+      expect(res.status).toHaveBeenCalledWith(404);
+  expect(res.json).toHaveBeenCalledWith({
+    message: "User not found",
+    code: "USER_NOT_FOUND",
+  });
+});
 
-      prismaClient.user.findFirst.mockResolvedValue({
-        id: 1,
-        email: "test@example.com",
-        password: "hashed-password",
-      });
-      compareSync.mockReturnValue(false); // Password mismatch
 
-      await expect(login(req, res, mockNext)).rejects.toThrow(
-        "Incorrect password"
-      );
-    });
+
+    
+
+it("should return a 401 response if the password is incorrect", async () => {
+  const req = mockRequest({
+    body: {
+      email: "test@example.com",
+      password: "wrong-password",
+    },
+  });
+  const res = mockResponse();
+
+  // Mock Prisma's findFirst method to return a user object
+  prismaClient.user.findFirst.mockResolvedValue({
+    id: 1,
+    email: "test@example.com",
+    password: "hashed-password",
+  });
+
+  // Mock compareSync to return false (password mismatch)
+  compareSync.mockReturnValue(false);
+
+  await login(req, res, mockNext);
+
+  // Assert that the response status is 401 and the correct JSON error is sent
+  expect(res.status).toHaveBeenCalledWith(401);
+  expect(res.json).toHaveBeenCalledWith({
+    message: "Credentials not recognised.",
+    code: "INCORRECT_PASSWORD",
+  });
+});
   });
 
   describe("me", () => {

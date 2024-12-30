@@ -76,21 +76,21 @@ export const login = async (req, res, next) =>{
 
       res.json({user, token})
      
-    }
+    } catch (error) {
+        console.error("Error during login:", error);
+    
+        // Handle unexpected errors
+        return res.status(500).json({
+          message: "An unexpected error occurred",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }}
 
     export const me = async (req, res, next) =>{
   
         
         res.json(req.user)
-        } catch (error) {
-            console.error("Error during login:", error);
-        
-            // Handle unexpected errors
-            return res.status(500).json({
-              message: "An unexpected error occurred",
-              code: "INTERNAL_SERVER_ERROR",
-            });
-          }
+        } 
 
     export const logout = async (req, res, next) => {
         
