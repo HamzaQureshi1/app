@@ -136,6 +136,10 @@ const AppointmentsPage = () => {
   };
 
   const logOut = async () => {
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (!confirmLogout) {
+      return; // If the user cancels, exit the function
+    }
     try {
       await axios.post(`${API_BASE_URL2}/auth/logout`, {
         withCredentials: true,
