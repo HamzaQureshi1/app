@@ -27,7 +27,7 @@ const SignupPage = () => {
       name: nameReg,
     }).then((response) => {
 
-      console.log(response)
+
       alert("Please Login.");
     }).catch((error) => {
       console.error("Signup failed:", error.response?.data || error.message);

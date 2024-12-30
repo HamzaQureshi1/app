@@ -26,7 +26,7 @@ const AdminAppointmentsPage = () => {
 
     fetchAllAppointments();
   }, []);
-  console.log(appointments, 'APP')
+
   return (
     
     <div>

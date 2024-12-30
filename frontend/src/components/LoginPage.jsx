@@ -46,7 +46,7 @@ const LoginPage = () => {
     })
   }
 
-  console.log("LoginPage rendered");
+
 
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const LoginPage = () => {
         withCredentials: true,
       })
       .then((response) => {
-        console.log(response);
+
         if (response.status === 200) {
           setLoginStatus(true);
         } else {
@@ -63,7 +63,7 @@ const LoginPage = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
+
         setLoginStatus(false);
       });
   }, []);

@@ -44,8 +44,6 @@ res.json(user)}
 
 export const login = async (req, res, next) =>{
     const {email, password, name} = req.body;
-    console.log(req.body, 'BODY')
-    console.log(email, 'email', password, 'password', name, 'name')
     
     let user = await prismaClient.user.findFirst({where: {email}})
   
@@ -54,8 +52,7 @@ export const login = async (req, res, next) =>{
         throw (new NotFoundException('User not found', ErrorCodes.USER_NOT_FOUND));
     }
 
-    console.log(user, 'ZAK');
-    
+ 
     if(!compareSync(password, user.password)) {
         throw new Error('Incorrect password')
     }
@@ -63,13 +60,8 @@ export const login = async (req, res, next) =>{
     const token = jwt.sign({
         id: user.id
     },JWT_SECRET)
-    console.log(token, 'TEKKEN')
-    
 
-
-
-   
-    console.log(isProduction, 'YOOO');
+       
     const maxAge = 1000 * 60 * 60 * 24 * 7; // 7 days
 
   res.cookie("token", token, {
@@ -79,14 +71,13 @@ export const login = async (req, res, next) =>{
     sameSite: isProduction ? "None" : "Lax",
     expires: new Date(Date.now() + maxAge),
   });
-  console.log(res.cookie.token, 'TWX')
-    console.log(user, 'AFTER JWT')
+
       res.json({user, token})
      
     }
 
     export const me = async (req, res, next) =>{
-        console.log(req, 'REEEEE')
+  
         
         res.json(req.user)
         }

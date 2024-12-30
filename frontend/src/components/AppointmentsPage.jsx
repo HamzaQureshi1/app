@@ -32,11 +32,11 @@ const AppointmentsPage = () => {
       const response = await axios.get(`${API_BASE_URL}/personal`, {
         withCredentials: true,
       });
-      console.log(response.data, 'RESPONSE.DATA')
+     
       setAppointments(response.data.data);
       setAuthError(false);
       setUserRole(response.data.role); 
-      console.log(response.data.role, 'INSIDE FETCH')
+   
     } catch (error) {
       if (error.response && error.response.status === 401) {
         setAuthError(true);
@@ -130,7 +130,7 @@ const AppointmentsPage = () => {
       await axios.post(`${API_BASE_URL2}/auth/logout`, {
         withCredentials: true,
       });
-      console.log('navigate')
+    
       navigate('/')
   
     } catch (error) {
