@@ -26,33 +26,38 @@ const LoginPage = () => {
     ? 'https://app-xmfz.onrender.com'
     : 'http://localhost:3000';
 
-
-  const login = () => {
-    axios.post(
-      `${baseUrl}/api/auth/login`,
-      {
-        email: email,
-        password: password,
-      },
-      {
-        withCredentials: true, // Include credentials (cookies) in the request
-      }
-    ).then((response) =>{
-      if (response.data) {
-        setLoginStatus(true);
-        setErrorMessage(""); // Clear any previous errors
-        alert("Login successful! Redirecting...");
-        navigate("/appointments"); // Navigate to app
-      } else if (error.response) {
-        setErrorMessage(error.response.data.message); 
-        setLoginStatus(false);
-      } 
-      else {
-        setErrorMessage("An unexpected error occurred. Please try again.");
-        setLoginStatus(false);
-      }
-    })
-  }
+    const login = () => {
+      axios
+        .post(
+          `${baseUrl}/api/auth/login`,
+          {
+            email: email,
+            password: password,
+          },
+          {
+            withCredentials: true, // Include credentials (cookies) in the request
+          }
+        )
+        .then((response) => {
+          if (response.data) {
+            setLoginStatus(true);
+            setErrorMessage(""); // Clear any previous errors
+            alert("Login successful! Redirecting...");
+            navigate("/appointments"); // Navigate to appointments or dashboard
+          }
+        })
+        .catch((error) => {
+          // Handle error responses
+          if (error.response) {
+            // Backend sent a response (404, 401, etc.)
+            setErrorMessage(error.response.data.message); // Set backend error message
+          } else {
+            // Network or unexpected errors
+            setErrorMessage("An unexpected error occurred. Please try again.");
+          }
+          setLoginStatus(false);
+        });
+    };
 
 
 
