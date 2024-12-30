@@ -13,6 +13,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
 
   const handleLogin = (e) => {
@@ -37,11 +38,18 @@ const LoginPage = () => {
         withCredentials: true, // Include credentials (cookies) in the request
       }
     ).then((response) =>{
-      if (!response.data) {
+      if (response.data) {
+        setLoginStatus(true);
+        setErrorMessage(""); // Clear any previous errors
+        alert("Login successful! Redirecting...");
+        navigate("/appointments"); // Navigate to app
+      } else if (error.response) {
+        setErrorMessage(error.response.data.message); /
         setLoginStatus(false);
-      } else {
-      
-        setLoginStatus(true)
+      } 
+      else {
+        setErrorMessage("An unexpected error occurred. Please try again.");
+        setLoginStatus(false);
       }
     })
   }
@@ -93,6 +101,7 @@ const LoginPage = () => {
     {loginStatus &&  (
         <button onClick={() => navigate("/appointments")}>Open Appointments</button>
       )}
+      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
     </div>
 
 
