@@ -93,6 +93,10 @@ const AppointmentsPage = () => {
 
   // Delete an appointment
   const deleteAppointment = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this appointment?");
+  if (!confirmDelete) {
+    return; // If user cancels, exit the function
+  }
     try {
       await axios.delete(`${API_BASE_URL}/delete/${id}`, {
         withCredentials: true,
