@@ -44,7 +44,7 @@ const LoginPage = () => {
         alert("Login successful! Redirecting...");
         navigate("/appointments"); // Navigate to app
       } else if (error.response) {
-        setErrorMessage(error.response.data.message); /
+        setErrorMessage(error.response.data.message); 
         setLoginStatus(false);
       } 
       else {
