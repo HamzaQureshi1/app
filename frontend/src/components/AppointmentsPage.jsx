@@ -67,6 +67,12 @@ const AppointmentsPage = () => {
 
   // Update an appointment
   const updateAppointment = async () => {
+    const confirmUpdate = window.confirm("Are you sure you want to update this appointment?");
+    if (!confirmUpdate) {
+      return; // If user cancels, exit the function
+    }
+  
+
     try {
       await axios.put(`${API_BASE_URL}/update/${editId}`, formData, {
         withCredentials: true,
