@@ -162,14 +162,12 @@ const AppointmentsPage = () => {
    
     <div>
       <h1>Appointments</h1>
-      <button onClick={logOut}>
-    Logout
-  </button>
+      
 
       {authError ? (
         <p>You are not logged in. Please log in to view your appointments.</p>
       ) : (
-        <>
+        <button onClick={logOut}>Logout</button>
           {/* Appointment Form */}
           <form onSubmit={handleSubmit}>
             <input
