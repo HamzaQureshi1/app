@@ -8,21 +8,11 @@ import { Validation } from "../exceptions/validation.js";
 import { NotFoundException } from "../exceptions/not-found.js";
 import { ErrorCodes } from "../exceptions/root.js";
 import { SignUpSchema } from '../schema/users.js';
-import { createLogger, format, transports } from 'winston';
+import { logger } from "../index.js";
 
 const isProduction = process.env.NODE_ENV === "production";
 
-const logger = createLogger({
-  level: 'info',
-  format: format.combine(
-      format.timestamp(),
-      format.json()
-  ),
-  transports: [
-      new transports.Console(), // Log to console
-      new transports.File({ filename: 'failed-logins.log' }) // Log to a file
-  ]
-});
+
 
 export const signup = async (req, res, next) =>{
 

@@ -6,7 +6,7 @@ import { errorMiddleware } from './middleware/error.js'
 import { SignUpSchema } from './schema/users.js'
 import cors from "cors";
 import cookieParser from 'cookie-parser'
-
+import { createLogger, format, transports } from 'winston';
 
 
 const app = express()
@@ -31,6 +31,20 @@ export const prismaClient = new PrismaClient({
     log: ['query']
 })
 
+export const logger = createLogger({
+  level: 'info',
+  format: format.combine(
+      format.timestamp(),
+      format.json()
+  ),
+  transports: [
+      new transports.Console(), // Log to console
+      new transports.File({ filename: 'failed-logins.log' }) // Log to a file
+  ]
+});
+
+
 app.use(errorMiddleware);
 
 app.listen(PORT, () => {console.log('App working')})
+
