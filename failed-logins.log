@@ -1,1 +1,26 @@
 {"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt","timestamp":"2024-12-31T12:14:08.499Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt","timestamp":"2024-12-31T16:13:40.035Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:34:54.039Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:34:54.888Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:34:55.587Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:34:56.302Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:34:56.905Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:34:57.420Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:34:57.867Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:34:58.269Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:34:58.620Z"}
+{"ip":"::1","level":"warn","message":"IP blocked due to too many failed attempts","timestamp":"2024-12-31T16:34:59.005Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:34:59.005Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:39:14.681Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:39:16.473Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:39:17.003Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:39:17.419Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:39:17.819Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:39:18.223Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:39:18.620Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:39:19.089Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:39:19.589Z"}
+{"ip":"::1","level":"warn","message":"IP ::1 blocked due to too many failed attempts","timestamp":"2024-12-31T16:39:20.070Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:39:20.070Z"}
+{"email":"bal@alc.ocm","ip":"::1","level":"info","message":"Failed login attempt: user not found","timestamp":"2024-12-31T16:44:47.177Z"}
+{"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:44:59.825Z"}

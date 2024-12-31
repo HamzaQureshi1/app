@@ -11,8 +11,11 @@ import { SignUpSchema } from '../schema/users.js';
 import { logger } from "../index.js";
 
 const isProduction = process.env.NODE_ENV === "production";
-
-
+// In-memory maps for tracking failed attempts and blocked IPs
+const failedAttempts = new Map();
+const blockedIps = new Map();
+const BLOCK_DURATION = 5 * 60 * 1000; // Block for 5 minutes
+const MAX_FAILED_ATTEMPTS = 10;
 
 export const signup = async (req, res, next) =>{
 
@@ -42,32 +45,50 @@ user = await prismaClient.user.create({
 res.json(user)}
 
 
-
-
-
 export const login = async (req, res, next) =>{
     try{
     const {email, password, name} = req.body;
+
+    const currentTime = Date.now();
+    if (blockedIps.has(req.ip) && currentTime < blockedIps.get(req.ip)) {
+        return res.status(403).json({
+            message: "Too many failed attempts. Try again later.",
+        });
+    }
     
     let user = await prismaClient.user.findFirst({where: {email}})
-  
-    if (!user) {
-        // Throw a specific error for "User not found"
-        return res.status(404).json({ message: "User not found", code: "USER_NOT_FOUND" });
-      }
-      console.log('EMAIL', email, 'IP', req.ip)
-      // Check if the password matches
-      if (!compareSync(password, user.password)) {
+  if (!user) {
+        // Log failed attempt
+        incrementFailedAttempts(req.ip);
         logger.info({
-          message: 'Failed login attempt',
+          message: "Failed login attempt: user not found",
           email: req.body.email,
-          ip: req.ip, // Capture the user's IP address
-          timestamp: new Date().toISOString()
-      });
-      
-        return res.status(401).json({ message: "Credentials not recognised.", code: "INCORRECT_PASSWORD" });
-      }
+          ip: req.ip,
+          timestamp: new Date().toISOString(),
+        });
   
+        return res.status(404).json({
+          message: "User not found",
+          code: "USER_NOT_FOUND",
+        });
+      }
+     
+       if (!compareSync(password, user.password)) {
+            incrementFailedAttempts(req.ip);
+            logger.info({
+              message: "Failed login attempt: incorrect password",
+              email: req.body.email,
+              ip: req.ip,
+              timestamp: new Date().toISOString(),
+            });
+      
+            return res.status(401).json({
+              message: "Credentials not recognised.",
+              code: "INCORRECT_PASSWORD",
+            });
+          }
+
+          failedAttempts.delete(req.ip);
 
     const token = jwt.sign({
         id: user.id
@@ -114,3 +135,20 @@ export const login = async (req, res, next) =>{
           res.status(200).json({ message: "Logged out successfully" })
   
         }
+
+    const incrementFailedAttempts = (ip) => {
+      const attempts = failedAttempts.get(ip) || 0;
+      const updatedAttempts = attempts + 1;
+    
+      failedAttempts.set(ip, updatedAttempts);
+    
+      if (updatedAttempts >= MAX_FAILED_ATTEMPTS) {
+        blockedIps.set(ip, Date.now() + BLOCK_DURATION);
+        failedAttempts.delete(ip); // Reset failed attempts after blocking
+        logger.warn({
+          message: `IP ${ip} blocked due to too many failed attempts`,
+          ip,
+          timestamp: new Date().toISOString(),
+        });
+      }
+    };    
