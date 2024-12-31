@@ -8,8 +8,21 @@ import { Validation } from "../exceptions/validation.js";
 import { NotFoundException } from "../exceptions/not-found.js";
 import { ErrorCodes } from "../exceptions/root.js";
 import { SignUpSchema } from '../schema/users.js';
+import { createLogger, format, transports } from 'winston';
 
 const isProduction = process.env.NODE_ENV === "production";
+
+const logger = createLogger({
+  level: 'info',
+  format: format.combine(
+      format.timestamp(),
+      format.json()
+  ),
+  transports: [
+      new transports.Console(), // Log to console
+      new transports.File({ filename: 'failed-logins.log' }) // Log to a file
+  ]
+});
 
 export const signup = async (req, res, next) =>{
 
@@ -55,6 +68,12 @@ export const login = async (req, res, next) =>{
   
       // Check if the password matches
       if (!compareSync(password, user.password)) {
+        logger.info({
+          message: 'Failed login attempt',
+          email: email,
+          ip: req.ip, // Capture the user's IP address
+          timestamp: new Date().toISOString()
+      });
         return res.status(401).json({ message: "Credentials not recognised.", code: "INCORRECT_PASSWORD" });
       }
   
