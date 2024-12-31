@@ -55,15 +55,16 @@ export const login = async (req, res, next) =>{
         // Throw a specific error for "User not found"
         return res.status(404).json({ message: "User not found", code: "USER_NOT_FOUND" });
       }
-  
+      console.log('EMAIL', email, 'IP', req.ip)
       // Check if the password matches
       if (!compareSync(password, user.password)) {
         logger.info({
           message: 'Failed login attempt',
-          email: email,
+          email: req.body.email,
           ip: req.ip, // Capture the user's IP address
           timestamp: new Date().toISOString()
       });
+      
         return res.status(401).json({ message: "Credentials not recognised.", code: "INCORRECT_PASSWORD" });
       }
   

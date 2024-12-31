@@ -1,10 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { signup, login, me } from "../src/controllers/auth.js";
-import { prismaClient } from "../src/index.js";
+import { prismaClient, logger } from "../src/index.js";
 import { hashSync, compareSync } from "bcrypt";
 import jwt from "jsonwebtoken";
-
-
 
 // Mock external modules
 vi.mock("../src/index.js", () => ({
@@ -13,6 +11,9 @@ vi.mock("../src/index.js", () => ({
       findFirst: vi.fn(),
       create: vi.fn(),
     },
+  },
+  logger: {
+    info: vi.fn(), // Mock the `info` method
   },
 }));
 
@@ -34,6 +35,7 @@ vi.mock("bcrypt", () => ({
 vi.mock("../secrets.js", () => ({
   JWT_SECRET: "test-secret",
 }));
+
 
 // Mock Express.js request and response objects
 const mockRequest = (body = {}, user = null) => ({
@@ -181,6 +183,7 @@ it("should return a 401 response if the password is incorrect", async () => {
       email: "test@example.com",
       password: "wrong-password",
     },
+    ip: "127.0.0.1", 
   });
   const res = mockResponse();
 
@@ -195,6 +198,13 @@ it("should return a 401 response if the password is incorrect", async () => {
   compareSync.mockReturnValue(false);
 
   await login(req, res, mockNext);
+
+  // expect(logger.info).toHaveBeenCalledWith({
+  //   message: 'Failed login attempt',
+  //   email: 'test@example.com',
+  //   ip: "127.0.0.1",  // MockRequest does not include `req.ip`, add if necessary
+  //   timestamp: expect.any(String), // Match any string for timestamp
+  // });
 
   // Assert that the response status is 401 and the correct JSON error is sent
   expect(res.status).toHaveBeenCalledWith(401);
