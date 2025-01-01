@@ -24,3 +24,14 @@
 {"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:39:20.070Z"}
 {"email":"bal@alc.ocm","ip":"::1","level":"info","message":"Failed login attempt: user not found","timestamp":"2024-12-31T16:44:47.177Z"}
 {"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:44:59.825Z"}
+2025-01-01T12:26:50.533Z [info]: Failed login attempt from IP ::1: incorrect password
+2025-01-01T12:26:52.700Z [info]: Failed login attempt from IP ::1: incorrect password
+2025-01-01T12:26:53.419Z [info]: Failed login attempt from IP ::1: incorrect password
+2025-01-01T12:26:53.883Z [info]: Failed login attempt from IP ::1: incorrect password
+2025-01-01T12:26:54.271Z [info]: Failed login attempt from IP ::1: incorrect password
+2025-01-01T12:26:54.630Z [info]: Failed login attempt from IP ::1: incorrect password
+2025-01-01T12:26:54.897Z [info]: Failed login attempt from IP ::1: incorrect password
+2025-01-01T12:26:55.117Z [info]: Failed login attempt from IP ::1: incorrect password
+2025-01-01T12:26:55.286Z [info]: Failed login attempt from IP ::1: incorrect password
+2025-01-01T12:26:55.518Z [warn]: IP ::1 blocked due to too many failed login attempts.
+2025-01-01T12:26:55.518Z [info]: Failed login attempt from IP ::1: incorrect password

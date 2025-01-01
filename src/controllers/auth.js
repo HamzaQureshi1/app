@@ -2,13 +2,15 @@ import { hashSync, compareSync } from "bcrypt";
 import { prismaClient } from '../index.js'
 import  jwt from 'jsonwebtoken'
 const { sign, verify } = jwt;
-import { JWT_SECRET } from "../secrets.js";
+import { JWT_SECRET, REDIS_URL } from "../secrets.js";
 import { BadRequestsException } from "../exceptions/bad-request.js";
 import { Validation } from "../exceptions/validation.js";
 import { NotFoundException } from "../exceptions/not-found.js";
 import { ErrorCodes } from "../exceptions/root.js";
 import { SignUpSchema } from '../schema/users.js';
 import { logger } from "../index.js";
+import {createClient} from "redis";
+
 
 const isProduction = process.env.NODE_ENV === "production";
 // In-memory maps for tracking failed attempts and blocked IPs
@@ -16,6 +18,17 @@ const failedAttempts = new Map();
 const blockedIps = new Map();
 const BLOCK_DURATION = 5 * 60 * 1000; // Block for 5 minutes
 const MAX_FAILED_ATTEMPTS = 10;
+
+
+const redisClient = createClient({
+  url: REDIS_URL, // Render provides REDIS_URL in the environment variables
+});
+redisClient.connect();
+
+const getClientIp = (req) => {
+  const forwarded = req.headers["x-forwarded-for"];
+  return forwarded ? forwarded.split(",")[0] : req.ip;
+};
 
 export const signup = async (req, res, next) =>{
 
@@ -45,77 +58,52 @@ user = await prismaClient.user.create({
 res.json(user)}
 
 
-export const login = async (req, res, next) =>{
-    try{
-    const {email, password, name} = req.body;
+export const login = async (req, res, next) => {
+  try {
+      const { email, password } = req.body;
+      const ip = getClientIp(req);
 
-    const currentTime = Date.now();
-    if (blockedIps.has(req.ip) && currentTime < blockedIps.get(req.ip)) {
-        return res.status(403).json({
-            message: "Too many failed attempts. Try again later.",
-        });
-    }
-    
-    let user = await prismaClient.user.findFirst({where: {email}})
-  if (!user) {
-        // Log failed attempt
-        incrementFailedAttempts(req.ip);
-        logger.info({
-          message: "Failed login attempt: user not found",
-          email: req.body.email,
-          ip: req.ip,
-          timestamp: new Date().toISOString(),
-        });
-  
-        return res.status(404).json({
-          message: "User not found",
-          code: "USER_NOT_FOUND",
-        });
+      // Check if the IP is blocked
+      if (await isIpBlocked(ip)) {
+          return res.status(403).json({
+              message: "Too many failed attempts. Try again later.",
+          });
       }
-     
-       if (!compareSync(password, user.password)) {
-            incrementFailedAttempts(req.ip);
-            logger.info({
-              message: "Failed login attempt: incorrect password",
-              email: req.body.email,
-              ip: req.ip,
-              timestamp: new Date().toISOString(),
-            });
-      
-            return res.status(401).json({
-              message: "Credentials not recognised.",
-              code: "INCORRECT_PASSWORD",
-            });
-          }
 
-          failedAttempts.delete(req.ip);
+      let user = await prismaClient.user.findFirst({ where: { email } });
 
-    const token = jwt.sign({
-        id: user.id
-    },JWT_SECRET)
+      if (!user) {
+          await incrementFailedAttempts(ip);
+          logger.info(`Failed login attempt from IP ${ip}: user not found`);
+          return res.status(404).json({ message: "User not found" });
+      }
 
-       
-    const maxAge = 1000 * 60 * 60 * 24 * 7; // 7 days
+      if (!compareSync(password, user.password)) {
+          await incrementFailedAttempts(ip);
+          logger.info(`Failed login attempt from IP ${ip}: incorrect password`);
+          return res.status(401).json({ message: "Invalid credentials" });
+      }
 
-  res.cookie("token", token, {
+      // Reset failed attempts on successful login
+      await redisClient.del(`fail:${ip}`);
 
-    httpOnly: true,
-    secure: isProduction,
-    sameSite: isProduction ? "None" : "Lax",
-    expires: new Date(Date.now() + maxAge),
-  });
+      const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: "7d" });
 
-      res.json({user, token})
-     
-    } catch (error) {
-        console.error("Error during login:", error);
-    
-        // Handle unexpected errors
-        return res.status(500).json({
-          message: "An unexpected error occurred",
-          code: "INTERNAL_SERVER_ERROR",
-        });
-      }}
+      res.cookie("token", token, {
+          httpOnly: true,
+          secure: isProduction,
+          sameSite: "None",
+          expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+      });
+
+      res.json({ user, token });
+  } catch (error) {
+      console.error("Error during login:", error);
+      res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
 
     export const me = async (req, res, next) =>{
   
@@ -136,19 +124,22 @@ export const login = async (req, res, next) =>{
   
         }
 
-    const incrementFailedAttempts = (ip) => {
-      const attempts = failedAttempts.get(ip) || 0;
-      const updatedAttempts = attempts + 1;
-    
-      failedAttempts.set(ip, updatedAttempts);
-    
+    const incrementFailedAttempts = async (ip) => {
+      const attempts = await redisClient.get(`fail:${ip}`);
+      const updatedAttempts = (parseInt(attempts) || 0) + 1;
+  
       if (updatedAttempts >= MAX_FAILED_ATTEMPTS) {
-        blockedIps.set(ip, Date.now() + BLOCK_DURATION);
-        failedAttempts.delete(ip); // Reset failed attempts after blocking
-        logger.warn({
-          message: `IP ${ip} blocked due to too many failed attempts`,
-          ip,
-          timestamp: new Date().toISOString(),
-        });
+          // Block IP for 5 minutes
+          await redisClient.set(`block:${ip}`, "1", "EX", BLOCK_DURATION);
+          await redisClient.del(`fail:${ip}`); // Clear failed attempts
+          logger.warn(`IP ${ip} blocked due to too many failed login attempts.`);
+      } else {
+          // Increment failed attempts with a TTL
+          await redisClient.set(`fail:${ip}`, updatedAttempts, "EX", BLOCK_DURATION);
       }
-    };    
+  };
+
+  const isIpBlocked = async (ip) => {
+    const isBlocked = await redisClient.get(`block:${ip}`);
+    return !!isBlocked;
+};
