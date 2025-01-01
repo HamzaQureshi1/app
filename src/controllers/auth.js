@@ -14,8 +14,8 @@ const isProduction = process.env.NODE_ENV === "production";
 // In-memory maps for tracking failed attempts and blocked IPs
 const failedAttempts = new Map();
 const blockedIps = new Map();
-const BLOCK_DURATION = 5 * 60 * 1000; // Block for 5 minutes
-const MAX_FAILED_ATTEMPTS = 10;
+const BLOCK_DURATION = 1 * 60 * 1000 // Block for 5 minutes
+const MAX_FAILED_ATTEMPTS = 2;
 
 export const signup = async (req, res, next) =>{
 
@@ -59,7 +59,12 @@ export const login = async (req, res, next) =>{
     let user = await prismaClient.user.findFirst({where: {email}})
   if (!user) {
         // Log failed attempt
-        incrementFailedAttempts(req.ip);
+        try {
+          await incrementFailedAttempts(req.ip);
+        } catch (error) {
+          console.error("Error incrementing failed attempts:", err);
+        }
+     
         logger.info({
           message: "Failed login attempt: user not found",
           email: req.body.email,
@@ -74,7 +79,11 @@ export const login = async (req, res, next) =>{
       }
      
        if (!compareSync(password, user.password)) {
-            incrementFailedAttempts(req.ip);
+        try {
+          await incrementFailedAttempts(req.ip);
+        } catch (error) {
+          console.error("Error incrementing failed attempts:", err);
+        }    
             logger.info({
               message: "Failed login attempt: incorrect password",
               email: req.body.email,
@@ -88,7 +97,12 @@ export const login = async (req, res, next) =>{
             });
           }
 
-          failedAttempts.delete(req.ip);
+          try {
+            failedAttempts.delete(req.ip);
+          } catch (error) {
+            console.error("Error resetting failed attempts:", err);
+          }
+         
 
     const token = jwt.sign({
         id: user.id
@@ -136,7 +150,7 @@ export const login = async (req, res, next) =>{
   
         }
 
-    const incrementFailedAttempts = (ip) => {
+    export const incrementFailedAttempts = (ip) => {
       const attempts = failedAttempts.get(ip) || 0;
       const updatedAttempts = attempts + 1;
     

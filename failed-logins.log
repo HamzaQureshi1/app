@@ -24,3 +24,149 @@
 {"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:39:20.070Z"}
 {"email":"bal@alc.ocm","ip":"::1","level":"info","message":"Failed login attempt: user not found","timestamp":"2024-12-31T16:44:47.177Z"}
 {"email":"test@test.com","ip":"::1","level":"info","message":"Failed login attempt: incorrect password","timestamp":"2024-12-31T16:44:59.825Z"}
+2025-01-01T14:37:55.010Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:37:56.892Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:37:57.555Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:37:58.355Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:37:58.820Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:12.350Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:14.164Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:14.566Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:14.975Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:15.507Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:15.813Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:16.157Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:16.479Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:16.794Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:17.024Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:39:17.025Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:17.535Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:19.503Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:21.305Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:22.087Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:22.701Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:23.995Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:24.636Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:25.272Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:25.884Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:26.500Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:39:26.500Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:39:27.130Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:06.861Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:07.625Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:08.094Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:08.299Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:08.475Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:08.661Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:08.829Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:09.002Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:09.190Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:40:09.190Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:09.408Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:09.577Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:09.763Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:09.938Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:10.114Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:10.284Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:10.453Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:10.628Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:10.806Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:10.992Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:40:10.993Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:11.176Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:11.352Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:11.528Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:11.708Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:11.860Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:54.718Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:56.585Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:56.909Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:57.161Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:57.420Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:57.641Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:57.920Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:58.167Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:58.411Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:40:58.646Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:40:58.646Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:42:38.181Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:42:40.315Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:42:40.700Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:42:41.011Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:42:43.581Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:43:21.483Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:43:23.908Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:43:23.908Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:43:24.576Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:43:25.422Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:43:25.423Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:43:25.949Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:43:26.666Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:43:26.666Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:43:28.483Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:43:29.019Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:43:29.019Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:43:29.433Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:43:29.611Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:43:29.611Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:43:29.788Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:43:30.358Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:43:30.358Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:43:30.704Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:43:31.490Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:43:31.490Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:43:56.939Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:43:58.338Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:43:58.339Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:45:43.279Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:45:44.647Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:45:44.647Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:45:45.265Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:45:46.013Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:45:46.013Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:45:46.711Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:45:47.325Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:45:47.325Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:45:47.873Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:45:48.500Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:45:48.501Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:46:03.238Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:46:03.820Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:46:03.820Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:46:04.269Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:46:26.409Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:46:26.409Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:46:27.029Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:46:27.416Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:46:27.416Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:46:27.751Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:47:19.585Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:47:21.046Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T14:47:21.047Z [info]: Failed login attempt: incorrect password
+2025-01-01T14:50:53.623Z [info]: Failed login attempt: incorrect password
+2025-01-01T15:31:15.437Z [info]: Failed login attempt: incorrect password
+2025-01-01T15:31:16.297Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T15:31:16.297Z [info]: Failed login attempt: incorrect password
+2025-01-01T15:31:17.024Z [info]: Failed login attempt: incorrect password
+2025-01-01T15:31:18.579Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T15:31:18.580Z [info]: Failed login attempt: incorrect password
+2025-01-01T15:31:19.605Z [info]: Failed login attempt: incorrect password
+2025-01-01T15:31:20.451Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T15:31:20.451Z [info]: Failed login attempt: incorrect password
+2025-01-01T15:31:21.403Z [info]: Failed login attempt: incorrect password
+2025-01-01T15:31:21.963Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T15:31:21.964Z [info]: Failed login attempt: incorrect password
+2025-01-01T15:31:23.373Z [info]: Failed login attempt: incorrect password
+2025-01-01T15:31:23.749Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T15:31:23.750Z [info]: Failed login attempt: incorrect password
+2025-01-01T15:31:26.216Z [info]: Failed login attempt: incorrect password
+2025-01-01T15:31:27.622Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T15:31:27.622Z [info]: Failed login attempt: incorrect password
+2025-01-01T15:31:28.500Z [info]: Failed login attempt: incorrect password
+2025-01-01T15:31:29.717Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T15:31:29.717Z [info]: Failed login attempt: incorrect password
+2025-01-01T15:42:28.866Z [info]: Failed login attempt: incorrect password
+2025-01-01T19:45:21.159Z [info]: Failed login attempt: incorrect password
+2025-01-01T19:45:23.737Z [warn]: IP ::1 blocked due to too many failed attempts
+2025-01-01T19:45:23.737Z [info]: Failed login attempt: incorrect password
+2025-01-01T19:46:50.124Z [info]: Failed login attempt: incorrect password
