@@ -153,7 +153,15 @@ export const login = async (req, res, next) =>{
     export const incrementFailedAttempts = (ip) => {
       const attempts = failedAttempts.get(ip) || 0;
       const updatedAttempts = attempts + 1;
-    
+
+
+
+      logger.info({
+        message: "Inside increment failed attempts.",
+        email: req.body.email,
+        ip: req.ip,
+        timestamp: new Date().toISOString(),
+      });
       failedAttempts.set(ip, updatedAttempts);
     
       if (updatedAttempts >= MAX_FAILED_ATTEMPTS) {
