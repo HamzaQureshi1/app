@@ -5,10 +5,12 @@ on:
     branches:
       - main
       - hosting
+      - content-security-policy
   pull_request:
     branches:
       - main
       - hosting
+      - content-security-policy
 
 jobs:
   # Run Unit Tests
