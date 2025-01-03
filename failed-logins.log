@@ -170,3 +170,5 @@
 2025-01-01T19:45:23.737Z [warn]: IP ::1 blocked due to too many failed attempts
 2025-01-01T19:45:23.737Z [info]: Failed login attempt: incorrect password
 2025-01-01T19:46:50.124Z [info]: Failed login attempt: incorrect password
+2025-01-03T10:39:04.341Z [info]: Failed login attempt: incorrect password
+2025-01-03T10:39:04.343Z [info]: Failed login attempt: user not found
