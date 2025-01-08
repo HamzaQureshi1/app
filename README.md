@@ -88,7 +88,7 @@ The application is hosted at **[Appointment Tool](https://appointment-tool.netli
 6. **Access the Application**:
    Navigate to `http://localhost:3000` (or the appropriate port set in the .env) to use the app.
 
----
+
 
 ## Testing
 
