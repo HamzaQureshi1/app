@@ -175,87 +175,10 @@ describe("Auth Controller", () => {
 
       expect(res.status).toHaveBeenCalledWith(404);
   expect(res.json).toHaveBeenCalledWith({
-    message: "User not found",
-    code: "USER_NOT_FOUND",
+    message: "Credentials not recognised",
+    code: "INCORRECT_PASSWORD",
   });
 });
-
-
-
-    
-
-// it("should return a 401 response if the password is incorrect", async () => {
-//   const req = mockRequest({
-//     body: {
-//       email: "test@example.com",
-//       password: "wrong-password",
-//     },
-//     ip: "127.0.0.1", 
-//   });
-//   const res = mockResponse();
-
-//   // Mock Prisma's findFirst method to return a user object
-//   prismaClient.user.findFirst.mockResolvedValue({
-//     id: 1,
-//     email: "test@example.com",
-//     password: "hashed-password",
-//   });
-
-//   // Mock compareSync to return false (password mismatch)
-//   compareSync.mockReturnValue(false);
-
-//   await login(req, res, mockNext);
-
-  
-//   // Assert that the response status is 401 and the correct JSON error is sent
-//   expect(res.status).toHaveBeenCalledWith(401);
-//   expect(res.json).toHaveBeenCalledWith({
-//     message: "Credentials not recognised.",
-//     code: "INCORRECT_PASSWORD",
-//   });
-// });
-
-
-// it.only("should return a 401 response if the password is incorrect", async () => {
-//   const req = mockRequest({
-//     body: {
-//       email: "test@example.com",
-//       password: "wrong-password",
-//     },
-//     ip: "127.0.0.1", 
-//   });
-//   const res = mockResponse();
-
-//   // Mock Prisma's findFirst method to return a user object
-//   prismaClient.user.findFirst.mockResolvedValue({
-//     id: 1,
-//     email: "test@example.com",
-//     password: "hashed-password",
-//   });
-
-//   // Mock incrementFailedAttempts to ensure it's called
-//   incrementFailedAttempts.mockResolvedValue();
-
-//   await login(req, res, mockNext);
-
-//   // Verify incrementFailedAttempts is called with the correct IP
-//   expect(incrementFailedAttempts).toHaveBeenCalledWith("127.0.0.1");
-
-//   // Verify logger.info is called with correct details
-//   expect(logger.info).toHaveBeenCalledWith({
-//     message: "Failed login attempt: incorrect password",
-//     email: "test@example.com",
-//     ip: "127.0.0.1",
-//     timestamp: expect.any(String),
-//   });
-
-//   // Assert that the response status is 401 and the correct JSON error is sent
-//   expect(res.status).toHaveBeenCalledWith(401);
-//   expect(res.json).toHaveBeenCalledWith({
-//     message: "Credentials not recognised.",
-//     code: "INCORRECT_PASSWORD",
-//   });
-// });
 
   });
 

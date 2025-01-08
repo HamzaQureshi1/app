@@ -73,8 +73,8 @@ export const login = async (req, res, next) =>{
         });
   
         return res.status(404).json({
-          message: "User not found",
-          code: "USER_NOT_FOUND",
+          message: "Credentials not recognised",
+          code: "INCORRECT_PASSWORD",
         });
       }
      
@@ -92,7 +92,7 @@ export const login = async (req, res, next) =>{
             });
       
             return res.status(401).json({
-              message: "Credentials not recognised.",
+              message: "Credentials not recognised",
               code: "INCORRECT_PASSWORD",
             });
           }
