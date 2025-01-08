@@ -75,7 +75,7 @@ jobs:
           npm run build
 
       - name: Install Netlify
-        run: npm install netlify-cli
+        run: npm install -g netlify-cli
 
       # Deploy Frontend and Backend
       - name: Deploy to Hosting Platform
